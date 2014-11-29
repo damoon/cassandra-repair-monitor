@@ -58,21 +58,10 @@ public class Keyspaces
         {
 
             buffer.append("keyspace " + keyspace.name + ":\n");
-            buffer.append("  repairedAt:           " + keyspace.repairedAt + "\n");
-            buffer.append("  oldestUnrepaired:     " + (keyspace.oldestUnrepaired == Long.MAX_VALUE ? "-" : keyspace.oldestUnrepaired)
-                    + "\n");
-            buffer.append("  repairedSize:         " + keyspace.repairedSize + "\n");
-            buffer.append("  unrepairedSize:       " + keyspace.unrepairedSize + "\n");
+            Formater.render(buffer, keyspace.repairedAt, keyspace.oldestUnrepaired, keyspace.repairedSize, keyspace.unrepairedSize);
         }
         buffer.append("all keyspaces:\n");
-        buffer.append("  repairedAt:           " + repairedAt + "\n");
-        buffer.append("  oldestUnrepaired:     " + (oldestUnrepaired == Long.MAX_VALUE ? "-" : oldestUnrepaired) + "\n");
-        buffer.append("  repairedSize:         " + repairedSize + "\n");
-        buffer.append("  unrepairedSize:       " + unrepairedSize + "\n");
-        // buffer.append("  repairedFilesCount:   " + repairedFilesCount +
-        // "\n");
-        // buffer.append("  unrepairedFilesCount: " + unrepairedFilesCount +
-        // "\n");
+        Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize);
         return buffer.toString();
     }
 }

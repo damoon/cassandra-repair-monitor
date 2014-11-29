@@ -44,7 +44,7 @@ public class Table
                 }
                 else
                 {
-                    oldestUnrepaired = Math.min(oldestUnrepaired, stats.minTimestamp / 1000);
+                    oldestUnrepaired = Math.min(oldestUnrepaired, stats.minTimestamp);
                     unrepairedSize += fileEntry.length();
                     unrepairedFilesCount++;
                 }
@@ -57,14 +57,7 @@ public class Table
     {
         final StringBuilder buffer = new StringBuilder();
         buffer.append("table " + keyspace + " " + name.substring(0, name.length() - 33) + ":\n");
-        buffer.append("  repairedAt:           " + repairedAt + "\n");
-        buffer.append("  oldestUnrepaired:     " + (oldestUnrepaired == Long.MAX_VALUE ? "-" : oldestUnrepaired) + "\n");
-        buffer.append("  repairedSize:         " + repairedSize + "\n");
-        buffer.append("  unrepairedSize:       " + unrepairedSize + "\n");
-        // buffer.append("  repairedFilesCount:   " + repairedFilesCount +
-        // "\n");
-        // buffer.append("  unrepairedFilesCount: " + unrepairedFilesCount +
-        // "\n");
+        Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize);
         return buffer.toString();
     }
 }

@@ -58,14 +58,7 @@ public class Keyspace
             buffer.append(table);
         }
         buffer.append("keyspace " + name + ":\n");
-        buffer.append("  repairedAt:           " + repairedAt + "\n");
-        buffer.append("  oldestUnrepaired:     " + (oldestUnrepaired == Long.MAX_VALUE ? "-" : oldestUnrepaired) + "\n");
-        buffer.append("  repairedSize:         " + repairedSize + "\n");
-        buffer.append("  unrepairedSize:       " + unrepairedSize + "\n");
-        // buffer.append("  repairedFilesCount:   " + repairedFilesCount +
-        // "\n");
-        // buffer.append("  unrepairedFilesCount: " + unrepairedFilesCount +
-        // "\n");
+        Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize);
         return buffer.toString();
     }
 }
