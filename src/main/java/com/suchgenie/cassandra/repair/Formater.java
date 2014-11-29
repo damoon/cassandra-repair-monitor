@@ -5,7 +5,8 @@ public class Formater
     static void render(final StringBuilder buffer, final long repairedAt, final long oldestUnrepaired, final long repairedSize,
             final long unrepairedSize)
     {
-        buffer.append("  last repair:       " + (repairedAt == 0 ? "-" : convertMS(System.currentTimeMillis() - repairedAt / 1000)) + "\n");
+        buffer.append("  last repair:       " + (repairedAt == 0 ? "-" : convertMS(System.currentTimeMillis() - repairedAt)) + "\n");
+        buffer.append("  oldest unrepaired: " + (oldestUnrepaired == Long.MAX_VALUE ? "-" : oldestUnrepaired) + " (raw)\n");
         buffer.append("  oldest unrepaired: "
                 + (oldestUnrepaired == Long.MAX_VALUE ? "-" : convertMS(System.currentTimeMillis() - oldestUnrepaired / 1000)) + "\n");
         buffer.append("  repaired size:     " + humanReadableByteCount(repairedSize, false) + "\n");
