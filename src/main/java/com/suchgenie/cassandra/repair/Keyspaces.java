@@ -10,6 +10,8 @@ import java.util.List;
 public class Keyspaces
 {
     long repairedAt;
+    long maxTimestamp = 0;
+    long minTimestamp = Long.MAX_VALUE;
     long oldestUnrepaired = Long.MAX_VALUE;
     long repairedSize;
     long unrepairedSize;
@@ -33,6 +35,9 @@ public class Keyspaces
                 oldestUnrepaired = Math.min(oldestUnrepaired, keyspace.oldestUnrepaired);
                 unrepairedSize += keyspace.unrepairedSize;
                 unrepairedFilesCount += keyspace.unrepairedFilesCount;
+
+                maxTimestamp = Math.max(maxTimestamp, keyspace.maxTimestamp);
+                minTimestamp = Math.min(minTimestamp, keyspace.minTimestamp);
 
                 keyspaces.add(keyspace);
             }
@@ -58,10 +63,11 @@ public class Keyspaces
         {
 
             buffer.append("keyspace " + keyspace.name + ":\n");
-            Formater.render(buffer, keyspace.repairedAt, keyspace.oldestUnrepaired, keyspace.repairedSize, keyspace.unrepairedSize);
+            Formater.render(buffer, keyspace.repairedAt, keyspace.oldestUnrepaired, keyspace.repairedSize, keyspace.unrepairedSize,
+                    keyspace.minTimestamp, keyspace.maxTimestamp);
         }
         buffer.append("all keyspaces:\n");
-        Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize);
+        Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
         return buffer.toString();
     }
 }

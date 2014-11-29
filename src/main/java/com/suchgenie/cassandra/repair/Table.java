@@ -15,6 +15,8 @@ public class Table
     String keyspace;
     String name;
     long repairedAt;
+    long maxTimestamp = 0;
+    long minTimestamp = Long.MAX_VALUE;
     long oldestUnrepaired = Long.MAX_VALUE;
     long repairedSize;
     long unrepairedSize;
@@ -35,6 +37,9 @@ public class Table
                 final Map<MetadataType, MetadataComponent> metadata = descriptor.getMetadataSerializer().deserialize(descriptor,
                         EnumSet.allOf(MetadataType.class));
                 final StatsMetadata stats = (StatsMetadata) metadata.get(MetadataType.STATS);
+
+                maxTimestamp = Math.max(maxTimestamp, stats.maxTimestamp);
+                minTimestamp = Math.min(minTimestamp, stats.minTimestamp);
 
                 if (stats.repairedAt != 0)
                 {
@@ -57,7 +62,7 @@ public class Table
     {
         final StringBuilder buffer = new StringBuilder();
         buffer.append("table " + keyspace + " " + name.substring(0, name.length() - 33) + ":\n");
-        Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize);
+        Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
         return buffer.toString();
     }
 }

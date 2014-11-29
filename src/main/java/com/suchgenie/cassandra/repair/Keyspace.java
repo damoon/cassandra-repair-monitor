@@ -11,6 +11,8 @@ public class Keyspace
 {
     String name;
     long repairedAt;
+    long maxTimestamp = 0;
+    long minTimestamp = Long.MAX_VALUE;
     long oldestUnrepaired = Long.MAX_VALUE;
     long repairedSize;
     long unrepairedSize;
@@ -37,6 +39,9 @@ public class Keyspace
                 unrepairedSize += table.unrepairedSize;
                 unrepairedFilesCount += table.unrepairedFilesCount;
 
+                maxTimestamp = Math.max(maxTimestamp, table.maxTimestamp);
+                minTimestamp = Math.min(minTimestamp, table.minTimestamp);
+
                 tables.add(table);
             }
         }
@@ -58,7 +63,7 @@ public class Keyspace
             buffer.append(table);
         }
         buffer.append("keyspace " + name + ":\n");
-        Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize);
+        Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
         return buffer.toString();
     }
 }

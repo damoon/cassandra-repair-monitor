@@ -3,9 +3,11 @@ package com.suchgenie.cassandra.repair;
 public class Formater
 {
     static void render(final StringBuilder buffer, final long repairedAt, final long oldestUnrepaired, final long repairedSize,
-            final long unrepairedSize)
+            final long unrepairedSize, final long minTs, final long maxTs)
     {
         buffer.append("  last repair:       " + (repairedAt == 0 ? "-" : convertMS(System.currentTimeMillis() - repairedAt)) + "\n");
+        buffer.append("  min Timestamp:     " + (minTs == Long.MAX_VALUE ? "-" : minTs) + " (raw)\n");
+        buffer.append("  max Timestamp:     " + (maxTs == 0 ? "-" : maxTs) + " (raw)\n");
         buffer.append("  oldest unrepaired: " + (oldestUnrepaired == Long.MAX_VALUE ? "-" : oldestUnrepaired) + " (raw)\n");
         buffer.append("  oldest unrepaired: "
                 + (oldestUnrepaired == Long.MAX_VALUE ? "-" : convertMS(System.currentTimeMillis() - oldestUnrepaired / 1000)) + "\n");
