@@ -20,7 +20,7 @@ public class Main
         }
 
         final String[] columnNames = { "Keyspace", "Columnfamily", "last repair", "min Timestamp", "max Timestamp", "oldest unrepaired",
-                "unrepaired Days", "repaired size", "unrepaired size" };
+                "unrepaired Time", "repaired size", "unrepaired size" };
 
         new TextTable(columnNames, new Keyspaces("/var/lib/cassandra/data", keyspacePattern, tablePattern).getData()).printTable();
 

@@ -20,9 +20,9 @@ public class Formater
     {
         return new Object[] { keyspace, columnfamily, repairedAt == 0 ? "-" : convertMS(System.currentTimeMillis() - repairedAt),
                         minTs == Long.MAX_VALUE ? "-" : minTs, maxTs == 0 ? "-" : maxTs,
-                                        oldestUnrepaired == Long.MAX_VALUE ? "-" : oldestUnrepaired,
-                                                convertMS(System.currentTimeMillis() - oldestUnrepaired / 1000), humanReadableByteCount(repairedSize, false),
-                                                humanReadableByteCount(unrepairedSize, false) };
+                                oldestUnrepaired == Long.MAX_VALUE ? "-" : oldestUnrepaired,
+                                        oldestUnrepaired == Long.MAX_VALUE ? "-" : convertMS(System.currentTimeMillis() - oldestUnrepaired / 1000),
+                                                humanReadableByteCount(repairedSize, false), humanReadableByteCount(unrepairedSize, false) };
     }
 
     static String convertMS(final long ms)
