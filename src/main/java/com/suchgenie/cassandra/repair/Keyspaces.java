@@ -70,4 +70,27 @@ public class Keyspaces
         Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
         return buffer.toString();
     }
+
+    public Object[][] getData()
+    {
+        int c = 0;
+        for (final Keyspace keyspace : keyspaces)
+        {
+            c += 1;
+            c += keyspace.tables.size();
+        }
+        c += 1;
+
+        final Object[][] data = new Object[c][];
+
+        c = 0;
+        for (final Keyspace keyspace : keyspaces)
+        {
+            c = keyspace.addData(c, data);
+        }
+
+        data[c++] = Formater.toRow("---", "---", c, c, c, c, minTimestamp, maxTimestamp);
+
+        return data;
+    }
 }

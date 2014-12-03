@@ -6,13 +6,23 @@ public class Formater
             final long unrepairedSize, final long minTs, final long maxTs)
     {
         buffer.append("  last repair:       " + (repairedAt == 0 ? "-" : convertMS(System.currentTimeMillis() - repairedAt)) + "\n");
-        buffer.append("  min Timestamp:     " + (minTs == Long.MAX_VALUE ? "-" : minTs) + " (raw)\n");
-        buffer.append("  max Timestamp:     " + (maxTs == 0 ? "-" : maxTs) + " (raw)\n");
-        buffer.append("  oldest unrepaired: " + (oldestUnrepaired == Long.MAX_VALUE ? "-" : oldestUnrepaired) + " (raw)\n");
+        buffer.append("  min Timestamp:     " + (minTs == Long.MAX_VALUE ? "-" : minTs) + "\n");
+        buffer.append("  max Timestamp:     " + (maxTs == 0 ? "-" : maxTs) + "\n");
+        buffer.append("  oldest unrepaired: " + (oldestUnrepaired == Long.MAX_VALUE ? "-" : oldestUnrepaired) + "\n");
         buffer.append("  oldest unrepaired: "
                 + (oldestUnrepaired == Long.MAX_VALUE ? "-" : convertMS(System.currentTimeMillis() - oldestUnrepaired / 1000)) + "\n");
         buffer.append("  repaired size:     " + humanReadableByteCount(repairedSize, false) + "\n");
         buffer.append("  unrepaired size:   " + humanReadableByteCount(unrepairedSize, false) + "\n");
+    }
+
+    static Object[] toRow(final String keyspace, final String columnfamily, final long repairedAt, final long oldestUnrepaired,
+            final long repairedSize, final long unrepairedSize, final long minTs, final long maxTs)
+    {
+        return new Object[] { keyspace, columnfamily, repairedAt == 0 ? "-" : convertMS(System.currentTimeMillis() - repairedAt),
+                        minTs == Long.MAX_VALUE ? "-" : minTs, maxTs == 0 ? "-" : maxTs,
+                                        oldestUnrepaired == Long.MAX_VALUE ? "-" : oldestUnrepaired,
+                                                convertMS(System.currentTimeMillis() - oldestUnrepaired / 1000), humanReadableByteCount(repairedSize, false),
+                                                humanReadableByteCount(unrepairedSize, false) };
     }
 
     static String convertMS(final long ms)

@@ -66,4 +66,14 @@ public class Keyspace
         Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
         return buffer.toString();
     }
+
+    public int addData(Integer c, final Object[][] data)
+    {
+        for (final Table table : tables)
+        {
+            c = table.addData(c, data);
+        }
+        data[c++] = Formater.toRow(name, "---", repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
+        return c;
+    }
 }

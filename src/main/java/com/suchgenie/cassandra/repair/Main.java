@@ -2,6 +2,8 @@ package com.suchgenie.cassandra.repair;
 
 import java.io.IOException;
 
+import dnl.utils.text.table.TextTable;
+
 public class Main
 {
     public static void main(final String[] args) throws IOException
@@ -17,7 +19,12 @@ public class Main
             tablePattern = args[1];
         }
 
-        System.out.println(new Keyspaces("/var/lib/cassandra/data", keyspacePattern, tablePattern));
+        final String[] columnNames = { "Keyspace", "Columnfamily", "last repair", "min Timestamp", "max Timestamp", "oldest unrepaired",
+                "unrepaired Days", "repaired size", "unrepaired size" };
+
+        new TextTable(columnNames, new Keyspaces("/var/lib/cassandra/data", keyspacePattern, tablePattern).getData()).printTable();
+
+        System.out.println();
 
     }
 }

@@ -65,4 +65,11 @@ public class Table
         Formater.render(buffer, repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
         return buffer.toString();
     }
+
+    public int addData(Integer c, final Object[][] data)
+    {
+        data[c++] = Formater.toRow(keyspace, name.substring(0, name.length() - 33), repairedAt, oldestUnrepaired, repairedSize,
+                unrepairedSize, minTimestamp, maxTimestamp);
+        return c;
+    }
 }
