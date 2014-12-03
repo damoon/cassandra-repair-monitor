@@ -73,7 +73,10 @@ public class Keyspace
         {
             c = table.addData(c, data);
         }
-        data[c++] = Formater.toRow(name, "---", repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
+        if (tables.size() > 1)
+        {
+            data[c++] = Formater.toRow(name, "---", repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
+        }
         return c;
     }
 }

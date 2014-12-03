@@ -76,10 +76,16 @@ public class Keyspaces
         int c = 0;
         for (final Keyspace keyspace : keyspaces)
         {
-            c += 1;
             c += keyspace.tables.size();
+            if (keyspace.tables.size() > 1)
+            {
+                c += 1;
+            }
         }
-        c += 1;
+        if (c > 1)
+        {
+            c += 1;
+        }
 
         final Object[][] data = new Object[c][];
 
@@ -89,7 +95,10 @@ public class Keyspaces
             c = keyspace.addData(c, data);
         }
 
-        data[c++] = Formater.toRow("---", "---", repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
+        if (c > 1)
+        {
+            data[c++] = Formater.toRow("---", "---", repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
+        }
 
         return data;
     }
