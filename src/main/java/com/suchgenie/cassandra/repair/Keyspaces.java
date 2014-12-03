@@ -82,7 +82,7 @@ public class Keyspaces
                 c += 1;
             }
         }
-        if (c > 1)
+        if (keyspaces.size() > 1)
         {
             c += 1;
         }
@@ -95,7 +95,7 @@ public class Keyspaces
             c = keyspace.addData(c, data);
         }
 
-        if (c > 1)
+        if (keyspaces.size() > 1)
         {
             data[c++] = Formater.toRow("---", "---", repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
         }
