@@ -89,7 +89,7 @@ public class Keyspaces
             c = keyspace.addData(c, data);
         }
 
-        data[c++] = Formater.toRow("---", "---", c, c, c, c, minTimestamp, maxTimestamp);
+        data[c++] = Formater.toRow("---", "---", repairedAt, oldestUnrepaired, repairedSize, unrepairedSize, minTimestamp, maxTimestamp);
 
         return data;
     }
